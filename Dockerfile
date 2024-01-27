@@ -6,9 +6,15 @@
 
 # RUN echo "cam -l" >> /root/.ash_history
 
-# ENTRYPOINT ["/bin/sh"]
+# WORKDIR /
+# COPY entrypoint.sh .
 
-FROM balenalib/raspberrypi4-64-debian:latest
+# ENTRYPOINT ["/entrypoint.sh"]
+
+FROM debian:latest
+
+COPY raspi.list /etc/apt/sources.list.d/raspi.list
+COPY trusted.gpg /etc/apt/trusted.gpg.d/raspi.gpg
 
 RUN apt update
 RUN apt install -y \
